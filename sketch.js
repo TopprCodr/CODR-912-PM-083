@@ -19,7 +19,6 @@ engine: engine,
 options: {
     width: 800,
     height: 600,
-    showAngleIndicator: false,
     wireframes: false
 }
 });
@@ -36,8 +35,6 @@ options = {
     isStatic: true
 };
 
-world.bodies = [];
-
 // these static walls will not be rendered in this sprites example, see options
 Composite.add(world, [
 Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
@@ -46,9 +43,9 @@ Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
 Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
 ]);
 
-var stack = Composites.stack(20, 20, 10, 4, 0, 0, function(x, y) {
+var stack = Composites.stack(250, 20, 10, 4, 0, 0, function(x, y) {
 if (Common.random() > 0.35) {
-    return Bodies.rectangle(x, y, 64, 64, {
+    return Bodies.rectangle(x, y, 20, 20, {
         render: {
             strokeStyle: '#ffffff',
             sprite: {
@@ -57,7 +54,7 @@ if (Common.random() > 0.35) {
         }
     });
 } else {
-    return Bodies.circle(x, y, 46, {
+    return Bodies.circle(x, y, 20, {
         density: 0.0005,
         frictionAir: 0.06,
         restitution: 0.3,
@@ -71,6 +68,8 @@ if (Common.random() > 0.35) {
 }
 });
 
+
+    
 Composite.add(world, stack);
 
 // add mouse control
