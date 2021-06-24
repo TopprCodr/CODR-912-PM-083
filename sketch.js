@@ -17,9 +17,10 @@ var render = Render.create({
 element: document.body,
 engine: engine,
 options: {
-    width: 800,
-    height: 600,
-    wireframes: false
+    width: 1300,
+    height: 450,
+    wireframes: false,
+    background: 'rgb(210, 173, 151)'
 }
 });
 
@@ -30,26 +31,29 @@ var runner = Runner.create();
 Runner.run(runner, engine);
 
 // add bodies
-var offset = 10,
 options = { 
     isStatic: true
 };
 
-// these static walls will not be rendered in this sprites example, see options
-Composite.add(world, [
-Bodies.rectangle(400, -offset, 800.5 + 2 * offset, 50.5, options),
-Bodies.rectangle(400, 600 + offset, 800.5 + 2 * offset, 50.5, options),
-Bodies.rectangle(800 + offset, 300, 50.5, 600.5 + 2 * offset, options),
-Bodies.rectangle(-offset, 300, 50.5, 600.5 + 2 * offset, options)
-]);
+// walls 
 
-var stack = Composites.stack(250, 20, 10, 4, 0, 0, function(x, y) {
+var bottom_wall = Bodies.rectangle(650, 450, 1300, 30, options);
+var right_wall = Bodies.rectangle(1270, 200, 30, 500, options);
+var left_wall = Bodies.rectangle(10, 200, 30, 500, options);
+
+Composite.add(world, [bottom_wall,right_wall,left_wall]);
+
+//stack of pencils/erasers
+
+var stack = Composites.stack(400, 20, 18, 8, 0, 0, function(x, y) {
 if (Common.random() > 0.35) {
     return Bodies.rectangle(x, y, 20, 20, {
         render: {
             strokeStyle: '#ffffff',
             sprite: {
-                texture: 'images/pencil.png'
+                texture: 'images/pencil.png',
+                xScale: 0.5,
+                yScale: 0.5
             }
         }
     });
@@ -61,15 +65,14 @@ if (Common.random() > 0.35) {
         friction: 0.01,
         render: {
             sprite: {
-                texture: 'images/eraser.png'
+                texture: 'images/eraser.png',
+                xScale: 0.5,
+                yScale: 0.5
             }
         }
     });
 }
 });
-
-
-    
 Composite.add(world, stack);
 
 // add mouse control
